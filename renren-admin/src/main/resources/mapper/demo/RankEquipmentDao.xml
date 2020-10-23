@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.demo.dao.RankEquipmentDao">
+
+    <resultMap type="io.renren.modules.demo.entity.RankEquipmentEntity" id="rankEquipmentMap">
+        <result property="id" column="id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="handMobileNumber" column="hand_mobile_number"/>
+        <result property="handMobileDate" column="hand_mobile_date"/>
+        <result property="laptopNumber" column="laptop_number"/>
+        <result property="laptopDate" column="laptop_date"/>
+        <result property="portablePrinterNumber" column="portable_printer_number"/>
+        <result property="portablePrinterDate" column="portable_printer_date"/>
+        <result property="portableWifiNumber" column="portable_wifi_number"/>
+        <result property="portableWifiDate" column="portable_wifi_date"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="creator" column="creator"/>
+        <result property="updater" column="updater"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <select id="getList" resultType="io.renren.modules.demo.entity.RankEquipmentEntity">
+        select id, dept_id, hand_mobile_number, hand_mobile_date, laptop_number, laptop_date, portable_printer_number, portable_printer_date, portable_wifi_number, portable_wifi_date, create_date, update_date, creator, updater from rank_equipment
+        where is_deleted = 0
+        <where>
+            <if test=" deptId!=null and deptId!='' ">
+                and dept_id = #{deptId}
+            </if>
+        </where>
+        order by ${orderField}
+        <choose>
+            <when test=" order!=null and order=='desc' ">
+                ${order}
+            </when>
+            <otherwise>
+                asc
+            </otherwise>
+        </choose>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(id) from rank_equipment
+        where is_deleted = 0
+        <where>
+            <if test=" deptId!=null and deptId!='' ">
+                and dept_id = #{deptId}
+            </if>
+        </where>
+    </select>
+</mapper>

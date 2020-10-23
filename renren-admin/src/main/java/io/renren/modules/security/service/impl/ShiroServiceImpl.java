@@ -38,7 +38,7 @@ public class ShiroServiceImpl implements ShiroService {
     public Set<String> getUserPermissions(UserDetail user) {
         //系统管理员，拥有最高权限
         List<String> permissionsList;
-        if(user.getSuperAdmin() == SuperAdminEnum.YES.value()) {
+        if(user.getSuperAdmin() == SuperAdminEnum.YES.value()) {// 是否是管理员
             permissionsList = sysMenuDao.getPermissionsList();
         }else{
             permissionsList = sysMenuDao.getUserPermissionsList(user.getId());

@@ -41,8 +41,7 @@ public class ValidatorUtils {
      * @param object        待校验对象
      * @param groups        待校验的组
      */
-    public static void validateEntity(Object object, Class<?>... groups)
-            throws RenException {
+    public static void validateEntity(Object object, Class<?>... groups) throws RenException {
         Locale.setDefault(LocaleContextHolder.getLocale());
         Validator validator = Validation.byDefaultProvider().configure().messageInterpolator(
                 new ResourceBundleMessageInterpolator(new MessageSourceResourceBundleLocator(getMessageSource())))

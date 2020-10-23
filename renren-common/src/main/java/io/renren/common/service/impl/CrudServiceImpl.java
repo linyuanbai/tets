@@ -28,6 +28,7 @@ import java.util.Map;
  */
 public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends BaseServiceImpl<M, T> implements CrudService<T, D> {
 
+    // 将entity转换成dto
     protected Class<D> currentDtoClass() {
         return (Class<D>)ReflectionKit.getSuperClassGenericType(getClass(), 2);
     }

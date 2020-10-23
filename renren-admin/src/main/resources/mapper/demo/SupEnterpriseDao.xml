@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.demo.dao.SupEnterpriseDao">
+
+    <resultMap type="io.renren.modules.demo.entity.SupEnterpriseEntity" id="supEnterpriseMap">
+        <result property="id" column="id"/>
+        <result property="enterpriseName" column="enterprise_name"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="superviseType" column="supervise_type"/>
+        <result property="linkMan" column="link_man"/>
+        <result property="linkWay" column="link_way"/>
+        <result property="createDate" column="create_date"/>
+        <result property="creator" column="creator"/>
+    </resultMap>
+
+    <select id="getInfo" resultType="io.renren.modules.demo.dto.SupEnterpriseDTO">
+        select id, enterprise_name, province, city, country, supervise_type, link_man, link_way from sup_enterprise
+        <where>
+            <if test=" enterpriseName!=null and enterpriseName!='' ">
+                and enterprise_name = #{enterpriseName}
+            </if>
+            <if test=" province!=null and province!='' ">
+                and province = #{province}
+            </if>
+        </where>
+        order by ${orderField}
+        <choose>
+            <when test=" order!=null and order=='desc' ">
+                ${order}
+            </when>
+            <otherwise>
+                asc
+            </otherwise>
+        </choose>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="long">
+        select count(id) from sup_enterprise
+        <where>
+            <if test=" enterpriseName!=null and enterpriseName!='' ">
+                and enterprise_name = #{enterpriseName}
+            </if>
+            <if test=" province!=null and province!='' ">
+                and province = #{province}
+            </if>
+        </where>
+    </select>
+
+</mapper>
