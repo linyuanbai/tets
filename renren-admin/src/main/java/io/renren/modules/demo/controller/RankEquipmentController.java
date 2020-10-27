@@ -40,6 +40,7 @@ import java.util.Map;
 @Api(tags="移动执法装备管理信息表")
 public class RankEquipmentController {
 
+
     @Autowired
     private RankEquipmentService rankEquipmentService;
     @Autowired
