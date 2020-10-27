@@ -14,6 +14,7 @@ import io.renren.common.exception.RenException;
 import io.renren.common.service.impl.BaseServiceImpl;
 import io.renren.common.utils.ConvertUtils;
 import io.renren.common.utils.TreeUtils;
+import io.renren.modules.demo.dto.RankEquipmentDTO;
 import io.renren.modules.security.user.SecurityUser;
 import io.renren.modules.security.user.UserDetail;
 import io.renren.modules.sys.dao.SysDeptDao;
@@ -34,6 +35,8 @@ import java.util.*;
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntity> implements SysDeptService {
 	@Autowired
 	private SysUserService sysUserService;
+	@Autowired
+	private SysDeptDao sysDeptDao;
 
 	@Override
 	public List<SysDeptDTO> list(Map<String, Object> params) {
@@ -117,6 +120,13 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntit
 		deptIdList.add(id);
 
 		return deptIdList;
+	}
+
+	@Override
+	public List<SysDeptDTO> getListByLevel(int grade, Long pid) {
+		List<SysDeptEntity> deptEntityList = sysDeptDao.getListByLevel(grade, pid);
+
+		return ConvertUtils.sourceToTarget(deptEntityList, SysDeptDTO.class);
 	}
 
 	/**

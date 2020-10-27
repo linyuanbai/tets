@@ -11,6 +11,8 @@ package io.renren.modules.sys.dao;
 import io.renren.common.dao.BaseDao;
 import io.renren.modules.sys.entity.SysDeptEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  */
 @Mapper
+@Repository
 public interface SysDeptDao extends BaseDao<SysDeptEntity> {
 
     List<SysDeptEntity> getList(Map<String, Object> params);
@@ -38,4 +41,11 @@ public interface SysDeptDao extends BaseDao<SysDeptEntity> {
      */
     List<Long> getSubDeptIdList(String id);
 
+    /**
+     * 根据部门等级和上级id获得部门数据列表
+     * @param grade
+     * @param pid
+     * @return
+     */
+    List<SysDeptEntity> getListByLevel(@Param("grade") int grade, @Param("pid") Long pid);
 }

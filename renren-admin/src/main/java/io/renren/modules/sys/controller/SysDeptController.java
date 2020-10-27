@@ -43,6 +43,15 @@ public class SysDeptController {
 	@RequiresPermissions("sys:dept:list")
 	public Result<List<SysDeptDTO>> list(){
 		List<SysDeptDTO> list = sysDeptService.list(new HashMap<>(1));
+		String a = new String("123");
+		return new Result<List<SysDeptDTO>>().ok(list);
+	}
+
+	@GetMapping("list/{grade}/{pid}")
+	@ApiOperation("多条信息")
+	@RequiresPermissions("sys:dept:list")
+	public Result<List<SysDeptDTO>> getListByLevel(@PathVariable("grade") int grade, @PathVariable("pid") Long pid) {
+		List<SysDeptDTO> list = sysDeptService.getListByLevel(grade, pid);
 
 		return new Result<List<SysDeptDTO>>().ok(list);
 	}

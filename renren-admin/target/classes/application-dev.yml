@@ -3,9 +3,9 @@ spring:
     druid:
       #MySQL
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3307/security_enterprise?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://cdb-plmksdia.bj.tencentcdb.com:10055/security_enterprise?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
       username: root
-      password: root
+      password: c123456789
 #      #Oracle
 #      driver-class-name: oracle.jdbc.OracleDriver
 #      url: jdbc:oracle:thin:@localhost:1521:xe

@@ -24,11 +24,9 @@
     <select id="getList" resultType="io.renren.modules.demo.entity.RankEquipmentEntity">
         select id, dept_id, hand_mobile_number, hand_mobile_date, laptop_number, laptop_date, portable_printer_number, portable_printer_date, portable_wifi_number, portable_wifi_date, create_date, update_date, creator, updater from rank_equipment
         where is_deleted = 0
-        <where>
-            <if test=" deptId!=null and deptId!='' ">
-                and dept_id = #{deptId}
-            </if>
-        </where>
+        <if test=" deptId!=null and deptId!='' ">
+            and dept_id = #{deptId}
+        </if>
         order by ${orderField}
         <choose>
             <when test=" order!=null and order=='desc' ">
@@ -44,10 +42,8 @@
     <select id="count" resultType="java.lang.Long">
         select count(id) from rank_equipment
         where is_deleted = 0
-        <where>
-            <if test=" deptId!=null and deptId!='' ">
-                and dept_id = #{deptId}
-            </if>
-        </where>
+        <if test=" deptId!=null and deptId!='' ">
+            and dept_id = #{deptId}
+        </if>
     </select>
 </mapper>

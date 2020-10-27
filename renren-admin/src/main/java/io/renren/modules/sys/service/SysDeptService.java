@@ -37,4 +37,12 @@ public interface SysDeptService extends BaseService<SysDeptEntity> {
 	 * @param id   部门ID
 	 */
 	List<Long> getSubDeptIdList(Long id);
+
+	/**
+	 * 根据部门等级和上级id获得部门数据列表
+	 * @param grade
+	 * @param pid
+	 * @return
+	 */
+    List<SysDeptDTO> getListByLevel(int grade, Long pid);
 }
