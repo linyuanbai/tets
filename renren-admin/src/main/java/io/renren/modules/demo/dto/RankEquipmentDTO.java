@@ -87,4 +87,7 @@ public class RankEquipmentDTO implements Serializable {
 
 	@ApiModelProperty(value = "修改人姓名")
 	private String updaterName;
+
+	@ApiModelProperty(value = "上级部门名称")
+	private String preDeptName;
 }

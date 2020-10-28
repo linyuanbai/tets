@@ -13,8 +13,9 @@ import io.renren.common.validator.group.UpdateGroup;
 import io.renren.modules.demo.dto.RankEquipmentDTO;
 import io.renren.modules.demo.excel.RankEquipmentExcel;
 import io.renren.modules.demo.service.RankEquipmentService;
-import io.renren.modules.sys.entity.SysDeptEntity;
+import io.renren.modules.sys.dto.SysDeptDTO;
 import io.renren.modules.sys.service.SysDeptService;
+import io.renren.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -40,11 +41,12 @@ import java.util.Map;
 @Api(tags="移动执法装备管理信息表")
 public class RankEquipmentController {
 
-    // test
     @Autowired
     private RankEquipmentService rankEquipmentService;
     @Autowired
     private SysDeptService sysDeptService;
+    @Autowired
+    private SysUserService sysUserService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -67,8 +69,16 @@ public class RankEquipmentController {
     @RequiresPermissions("demo:rankequipment:info")
     public Result<RankEquipmentDTO> get(@PathVariable("id") Long id){
         RankEquipmentDTO data = rankEquipmentService.get(id);
-        SysDeptEntity sysDeptEntity = sysDeptService.selectById(data.getDeptId());
-        data.setDeptName(sysDeptEntity.getName());
+        // 查询部门信息
+        SysDeptDTO sysDeptDTO = sysDeptService.get(data.getDeptId());
+        // 查询创建人、修改人姓名
+        String creatorName = sysUserService.get(data.getCreator()).getRealName();
+        String updaterName = sysUserService.get(data.getUpdater()).getRealName();
+        // 设置部门名称、上级部门名称、修改人姓名、创建人姓名
+        data.setDeptName(sysDeptDTO.getName());
+        data.setPreDeptName(sysDeptDTO.getParentName());
+        data.setCreatorName(creatorName);
+        data.setUpdaterName(updaterName);
 
         return new Result<RankEquipmentDTO>().ok(data);
     }
@@ -91,7 +101,6 @@ public class RankEquipmentController {
     @LogOperation("修改")
     @RequiresPermissions("demo:rankequipment:update")
     public Result update(@RequestBody RankEquipmentDTO dto){
-        System.out.println(dto);
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 

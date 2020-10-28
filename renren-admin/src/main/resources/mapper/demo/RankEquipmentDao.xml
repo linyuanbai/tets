@@ -24,8 +24,11 @@
     <select id="getList" resultType="io.renren.modules.demo.entity.RankEquipmentEntity">
         select id, dept_id, hand_mobile_number, hand_mobile_date, laptop_number, laptop_date, portable_printer_number, portable_printer_date, portable_wifi_number, portable_wifi_date, create_date, update_date, creator, updater from rank_equipment
         where is_deleted = 0
-        <if test=" deptId!=null and deptId!='' ">
-            and dept_id = #{deptId}
+        <if test=" deptIdList!=null ">
+            and dept_id
+            <foreach collection="deptIdList" item="deptId" index="i" open="in(" close=")" separator=", ">
+                #{deptId}
+            </foreach>
         </if>
         order by ${orderField}
         <choose>
@@ -42,8 +45,16 @@
     <select id="count" resultType="java.lang.Long">
         select count(id) from rank_equipment
         where is_deleted = 0
-        <if test=" deptId!=null and deptId!='' ">
-            and dept_id = #{deptId}
+        <if test=" deptIdList!=null ">
+            and dept_id
+            <foreach collection="deptIdList" item="deptId" index="i" open="in(" close=")" separator=", ">
+                #{deptId}
+            </foreach>
         </if>
+    </select>
+
+    <select id="selectByDeptId" resultType="io.renren.modules.demo.entity.RankEquipmentEntity">
+        select id, dept_id from rank_equipment
+        where dept_id = #{deptId}
     </select>
 </mapper>
