@@ -108,4 +108,9 @@ public class RankEquipmentServiceImpl extends CrudServiceImpl<RankEquipmentDao, 
             insert(entity);
         }
     }
+
+    public RankEquipmentDTO selectByDeptId (Long deptId) {
+        RankEquipmentEntity entity = rankEquipmentDao.selectByDeptId(deptId);
+        return ConvertUtils.sourceToTarget(entity, RankEquipmentDTO.class);
+    }
 }

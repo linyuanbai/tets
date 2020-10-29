@@ -10,6 +10,7 @@ package io.renren.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.renren.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -57,5 +58,41 @@ public class SysDeptEntity extends BaseEntity {
 	 */
 	@TableField(exist = false)
 	private String parentName;
+
+	/**
+	 * 联系地址
+	 */
+	private String address;
+
+	/**
+	 * 电话
+	 */
+	private String phone;
+
+	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
+	 * 负责人
+	 */
+	private Long master;
+
+
+	/**
+	 * 是否是叶子节点
+	 */
+	private int leaf;
+
+	/**
+	 * 是否是叶子节点
+	 */
+	private String status;
+
+	/**
+	 * 机构等级
+	 */
+	private String grade;
 
 }

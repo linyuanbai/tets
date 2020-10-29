@@ -30,7 +30,7 @@
 	</select>
 
 	<select id="getListByLevel" resultType="io.renren.modules.sys.entity.SysDeptEntity">
-		select id, pid, name from sys_dept
+		select id, pid, name, leaf from sys_dept
 		where grade = #{grade}
 		<if test=" pid!=null and pid!='' ">
 			and pid = #{pid}

@@ -57,6 +57,82 @@ public class SysDeptDTO extends TreeNode implements Serializable {
 	@ApiModelProperty(value = "上级部门名称")
 	private String parentName;
 
+	@ApiModelProperty(value = "联系地址")
+	private String address;
+
+	@ApiModelProperty(value = "电话")
+	private String phone;
+
+	@ApiModelProperty(value = "邮箱")
+	private String email;
+
+	@ApiModelProperty(value = "负责人")
+	private Long master;
+
+	@ApiModelProperty(value = "是否叶子节点")
+	private int leaf;
+
+	@ApiModelProperty(value = "负责人姓名")
+	private String masterName;
+
+	@ApiModelProperty(value = "状态")
+	private String status;
+
+	@ApiModelProperty(value = "机构等级")
+	private String grade;
+
+	public int getLeaf() {
+		return leaf;
+	}
+
+	public void setLeaf(int leaf) {
+		this.leaf = leaf;
+	}
+
+	public String getMasterName() {
+		return masterName;
+	}
+
+	public void setMasterName(String masterName) {
+		this.masterName = masterName;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	@Override
+	public String toString() {
+		return "SysDeptDTO{" +
+				"id=" + id +
+				", pid=" + pid +
+				", name='" + name + '\'' +
+				", sort=" + sort +
+				", createDate=" + createDate +
+				", parentName='" + parentName + '\'' +
+				", address='" + address + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", master=" + master +
+				", leaf=" + leaf +
+				", masterName='" + masterName + '\'' +
+				", status='" + status + '\'' +
+				", grade='" + grade + '\'' +
+				'}';
+	}
+
 	@Override
 	public Long getId() {
 		return id;
@@ -107,5 +183,37 @@ public class SysDeptDTO extends TreeNode implements Serializable {
 
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getMaster() {
+		return master;
+	}
+
+	public void setMaster(Long master) {
+		this.master = master;
 	}
 }

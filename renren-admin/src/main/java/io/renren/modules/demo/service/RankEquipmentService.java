@@ -15,4 +15,10 @@ import java.util.List;
  */
 public interface RankEquipmentService extends CrudService<RankEquipmentEntity, RankEquipmentDTO> {
 
+    /**
+     * 通过deptId查询数据
+     * @param id
+     * @return
+     */
+    RankEquipmentDTO selectByDeptId(Long id);
 }

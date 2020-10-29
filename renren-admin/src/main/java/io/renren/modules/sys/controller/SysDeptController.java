@@ -43,7 +43,7 @@ public class SysDeptController {
 	@RequiresPermissions("sys:dept:list")
 	public Result<List<SysDeptDTO>> list(){
 		List<SysDeptDTO> list = sysDeptService.list(new HashMap<>(1));
-		String a = new String("123");
+
 		return new Result<List<SysDeptDTO>>().ok(list);
 	}
 
