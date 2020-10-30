@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.renren.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -82,5 +83,15 @@ public class SysUserEntity extends BaseEntity {
 	 */
 	@TableField(exist=false)
 	private String deptName;
+
+	/**
+	 * 职务
+	 */
+	private String job;
+
+	/**
+	 * 职务级别
+	 */
+	private String jobLevel;
 
 }

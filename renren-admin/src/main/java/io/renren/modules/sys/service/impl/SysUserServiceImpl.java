@@ -13,6 +13,8 @@ import io.renren.common.constant.Constant;
 import io.renren.common.page.PageData;
 import io.renren.common.service.impl.BaseServiceImpl;
 import io.renren.common.utils.ConvertUtils;
+import io.renren.modules.demo.dto.SysUserExtraDTO;
+import io.renren.modules.demo.service.SysUserExtraService;
 import io.renren.modules.security.user.SecurityUser;
 import io.renren.modules.security.user.UserDetail;
 import io.renren.modules.sys.dao.SysUserDao;
@@ -28,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 	private SysRoleUserService sysRoleUserService;
 	@Autowired
 	private SysDeptService sysDeptService;
+	@Autowired
+	private SysUserExtraService sysUserExtraService;
 
 	@Override
 	public PageData<SysUserDTO> page(Map<String, Object> params) {
@@ -153,6 +158,117 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 	@Override
 	public List<Long> getUserIdListByDeptId(List<Long> deptIdList) {
 		return baseDao.getUserIdListByDeptId(deptIdList);
+	}
+
+	@Override
+	public void save(Map<String, String> params) {
+		// {username=gaewge, password=gewgewa, realName=fawef, status=1, job=0,
+		// jobStart=, jobLevel=2, levelStart=, deptId=1067246875800000067,
+		// sort=, remarks=, deptName=人事处, userId=, mobile=, office=,
+		// workPhone=, email=, roleIdList[0]=1316642919876149249, superviseCardNo=,
+		// administrationCardNo=, userType=, workGrade=, officeInfo=,
+		// gender=0, nation=geaw, source=gew, nativePlace=gawe,
+		// birthday=2020-10-20T16:00:00.000Z, startWork=, endWork=,
+		// education=, checkYear=, checkInfo=, cardNo=gewg}
+
+		// 创建用户dto
+		SysUserDTO sysUserDTO = new SysUserDTO();
+		sysUserDTO.setUsername(params.get("username"));
+		sysUserDTO.setPassword(params.get("password"));
+		sysUserDTO.setRealName(params.get("realName"));
+		sysUserDTO.setGender(new Integer(params.get("gender")));
+		sysUserDTO.setMobile(params.get("mobile"));
+		sysUserDTO.setEmail(params.get("email"));
+		sysUserDTO.setJob(params.get("job"));
+		sysUserDTO.setJobLevel(params.get("jobLevel"));
+		sysUserDTO.setDeptId(new Long(params.get("deptId")));
+		sysUserDTO.setStatus(new Integer(params.get("status")));
+		List<Long> roleIdList = new ArrayList<Long>();
+		roleIdList.add(new Long(params.get("roleIdList[0]")));
+		sysUserDTO.setRoleIdList(roleIdList);
+		// 保存用户
+		save(sysUserDTO);
+
+		// 查询新增的用户
+		SysUserDTO newDto = getByUsername(sysUserDTO.getUsername());
+
+		// 创建用户额外信息dto
+		SysUserExtraDTO sysUserExtraDTO = new SysUserExtraDTO();
+		sysUserExtraDTO.setUserId(newDto.getId());
+		sysUserExtraDTO.setMobilePhone(params.get("mobile"));
+		sysUserExtraDTO.setOffice(params.get("office"));
+		sysUserExtraDTO.setWorkPhone(params.get("workPhone"));
+		sysUserExtraDTO.setEmail(params.get("email"));
+		sysUserExtraDTO.setSuperviseCardNo(params.get("监察执法证号"));
+		sysUserExtraDTO.setAdministrationCardNo(params.get("administrationCardNo"));
+		sysUserExtraDTO.setUserType(params.get("userType"));
+		sysUserExtraDTO.setOfficeInfo(params.get("officeInfo"));
+		sysUserExtraDTO.setGender(params.get("gender"));
+		sysUserExtraDTO.setNation(params.get("nation"));
+		sysUserExtraDTO.setSource(params.get("source"));
+		sysUserExtraDTO.setNativePlace(params.get("nativePlace"));
+		sysUserExtraDTO.setBirthday(params.get("birthday"));
+		sysUserExtraDTO.setStartWork(params.get("startWork"));
+		sysUserExtraDTO.setEndWork(params.get("endWork"));
+		sysUserExtraDTO.setEducation(params.get("education"));
+		sysUserExtraDTO.setCheckYear(params.get("checkYear"));
+		sysUserExtraDTO.setCheckInfo(params.get("checkInfo"));
+		sysUserExtraDTO.setCardNo(params.get("cardNo"));
+
+		// 保存用户额外信息
+		sysUserExtraService.save(sysUserExtraDTO);
+	}
+
+	@Override
+	public void update(Map<String, String> params) {
+		// 创建用户dto
+		SysUserDTO sysUserDTO = new SysUserDTO();
+		sysUserDTO.setUsername(params.get("username"));
+		sysUserDTO.setPassword(params.get("password"));
+		sysUserDTO.setRealName(params.get("realName"));
+		sysUserDTO.setGender(new Integer(params.get("gender")));
+		sysUserDTO.setMobile(params.get("mobile"));
+		sysUserDTO.setEmail(params.get("email"));
+		sysUserDTO.setJob(params.get("job"));
+		sysUserDTO.setJobLevel(params.get("jobLevel"));
+		sysUserDTO.setDeptId(new Long(params.get("deptId")));
+		sysUserDTO.setStatus(new Integer(params.get("status")));
+		List<Long> roleIdList = new ArrayList<Long>();
+		roleIdList.add(new Long(params.get("roleIdList[0]")));
+		sysUserDTO.setRoleIdList(roleIdList);
+		// 获取要修改用户的id
+		Long userId = getByUsername(sysUserDTO.getUsername()).getId();
+		sysUserDTO.setId(userId);
+		update(sysUserDTO);
+
+		// 获取额外信息记录的id
+		Long id = sysUserExtraService.selectByUserId(userId).getId();
+		// 创建用户额外信息dto
+		SysUserExtraDTO sysUserExtraDTO = new SysUserExtraDTO();
+		sysUserDTO.setId(id);
+		sysUserExtraDTO.setUserId(userId);
+		sysUserExtraDTO.setMobilePhone(params.get("mobile"));
+		sysUserExtraDTO.setOffice(params.get("office"));
+		sysUserExtraDTO.setWorkPhone(params.get("workPhone"));
+		sysUserExtraDTO.setEmail(params.get("email"));
+		sysUserExtraDTO.setSuperviseCardNo(params.get("监察执法证号"));
+		sysUserExtraDTO.setAdministrationCardNo(params.get("administrationCardNo"));
+		sysUserExtraDTO.setUserType(params.get("userType"));
+		sysUserExtraDTO.setOfficeInfo(params.get("officeInfo"));
+		sysUserExtraDTO.setGender(params.get("gender"));
+		sysUserExtraDTO.setNation(params.get("nation"));
+		sysUserExtraDTO.setSource(params.get("source"));
+		sysUserExtraDTO.setNativePlace(params.get("nativePlace"));
+		sysUserExtraDTO.setBirthday(params.get("birthday"));
+		sysUserExtraDTO.setStartWork(params.get("startWork"));
+		sysUserExtraDTO.setEndWork(params.get("endWork"));
+		sysUserExtraDTO.setEducation(params.get("education"));
+		sysUserExtraDTO.setCheckYear(params.get("checkYear"));
+		sysUserExtraDTO.setCheckInfo(params.get("checkInfo"));
+		sysUserExtraDTO.setCardNo(params.get("cardNo"));
+
+		// 保存用户额外信息
+		sysUserExtraService.update(sysUserExtraDTO);
 	}
 
 }

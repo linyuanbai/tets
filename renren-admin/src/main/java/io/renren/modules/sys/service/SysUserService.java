@@ -55,4 +55,7 @@ public interface SysUserService extends BaseService<SysUserEntity> {
 	 */
 	List<Long> getUserIdListByDeptId(List<Long> deptIdList);
 
+    void save(Map<String, String> params);
+
+	void update(Map<String, String> params);
 }

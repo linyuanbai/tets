@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.DefaultGroup;
 import io.renren.common.validator.group.UpdateGroup;
+import io.renren.modules.demo.dto.SysUserExtraDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -89,5 +90,14 @@ public class SysUserDTO implements Serializable {
 
 	@ApiModelProperty(value = "部门名称")
 	private String deptName;
+
+	@ApiModelProperty(value = "职务")
+	private String job;
+
+	@ApiModelProperty(value = "职务级别")
+	private String jobLevel;
+
+	@ApiModelProperty(value = "用户额外信息")
+	private SysUserExtraDTO sysUserExtraDTO;
 
 }

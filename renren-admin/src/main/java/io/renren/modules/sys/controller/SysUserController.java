@@ -20,6 +20,8 @@ import io.renren.common.validator.ValidatorUtils;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.DefaultGroup;
 import io.renren.common.validator.group.UpdateGroup;
+import io.renren.modules.demo.dto.SysUserExtraDTO;
+import io.renren.modules.demo.service.SysUserExtraService;
 import io.renren.modules.security.user.SecurityUser;
 import io.renren.modules.security.user.UserDetail;
 import io.renren.modules.sys.dto.PasswordDTO;
@@ -55,6 +57,8 @@ public class SysUserController {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysRoleUserService sysRoleUserService;
+	@Autowired
+	private SysUserExtraService sysUserExtraService;
 
 	@GetMapping("page")
 	@ApiOperation("分页")
@@ -80,9 +84,13 @@ public class SysUserController {
 	public Result<SysUserDTO> get(@PathVariable("id") Long id){
 		SysUserDTO data = sysUserService.get(id);
 
-		//用户角色列表
+		// 用户角色列表
 		List<Long> roleIdList = sysRoleUserService.getRoleIdList(id);
 		data.setRoleIdList(roleIdList);
+
+		// 用户额外信息
+		SysUserExtraDTO sysUserExtraDTO = sysUserExtraService.selectByUserId(id);
+		data.setSysUserExtraDTO(sysUserExtraDTO);
 
 		return new Result<SysUserDTO>().ok(data);
 	}
@@ -117,12 +125,13 @@ public class SysUserController {
 	@ApiOperation("保存")
 	@LogOperation("保存")
 	@RequiresPermissions("sys:user:save")
-	public Result save(@RequestBody SysUserDTO dto){
+	public Result save(@ApiIgnore @RequestParam Map<String, String> params){
+		sysUserService.save(params);
 		//效验数据
-		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
-		sysUserService.save(dto);
-
+//		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//
+//		sysUserService.save(dto);
+//
 		return new Result();
 	}
 
@@ -130,11 +139,12 @@ public class SysUserController {
 	@ApiOperation("修改")
 	@LogOperation("修改")
 	@RequiresPermissions("sys:user:update")
-	public Result update(@RequestBody SysUserDTO dto){
+	public Result update(@ApiIgnore @RequestParam Map<String, String> params){
+		sysUserService.update(params);
 		//效验数据
-		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-
-		sysUserService.update(dto);
+//		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+//
+//		sysUserService.update(dto);
 
 		return new Result();
 	}

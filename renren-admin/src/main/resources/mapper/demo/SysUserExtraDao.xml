@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.demo.dao.SysUserExtraDao">
+
+    <resultMap type="io.renren.modules.demo.entity.SysUserExtraEntity" id="sysUserExtraMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="mobilePhone" column="mobile_phone"/>
+        <result property="office" column="office"/>
+        <result property="workPhone" column="work_phone"/>
+        <result property="email" column="email"/>
+        <result property="hasSuperviseCard" column="has_supervise_card"/>
+        <result property="superviseCardNo" column="supervise_card_no"/>
+        <result property="hasAdministrationCard" column="has_administration_card"/>
+        <result property="administrationCardNo" column="administration_card_no"/>
+        <result property="userType" column="user_type"/>
+        <result property="workGrade" column="work_grade"/>
+        <result property="officeInfo" column="office_info"/>
+        <result property="gender" column="gender"/>
+        <result property="nation" column="nation"/>
+        <result property="source" column="source"/>
+        <result property="nativePlace" column="native_place"/>
+        <result property="birthday" column="birthday"/>
+        <result property="startWork" column="start_work"/>
+        <result property="endWork" column="end_work"/>
+        <result property="education" column="education"/>
+        <result property="checkYear" column="check_year"/>
+        <result property="checkInfo" column="check_info"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="creator" column="creator"/>
+        <result property="updater" column="updater"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <select id="selectByUserId" resultType="io.renren.modules.demo.entity.SysUserExtraEntity">
+        select * from sys_user_extra where user_id = #{userId}
+    </select>
+
+</mapper>
