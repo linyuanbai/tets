@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 移动执法装备管理信息表
  *
@@ -69,16 +68,13 @@ public class RankEquipmentController {
     @RequiresPermissions("demo:rankequipment:info")
     public Result<RankEquipmentDTO> get(@PathVariable("id") Long id){
         RankEquipmentDTO data = rankEquipmentService.get(id);
-        // 查询部门信息
+        // 查询部门信息、创建人、修改人姓名
         SysDeptDTO sysDeptDTO = sysDeptService.get(data.getDeptId());
-        // 查询创建人、修改人姓名
         String creatorName = sysUserService.get(data.getCreator()).getRealName();
-        String updaterName = sysUserService.get(data.getUpdater()).getRealName();
         // 设置部门名称、上级部门名称、修改人姓名、创建人姓名
         data.setDeptName(sysDeptDTO.getName());
         data.setPreDeptName(sysDeptDTO.getParentName());
         data.setCreatorName(creatorName);
-        data.setUpdaterName(updaterName);
 
         return new Result<RankEquipmentDTO>().ok(data);
     }
@@ -101,6 +97,7 @@ public class RankEquipmentController {
     @LogOperation("修改")
     @RequiresPermissions("demo:rankequipment:update")
     public Result update(@RequestBody RankEquipmentDTO dto){
+        System.out.println(dto);
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 

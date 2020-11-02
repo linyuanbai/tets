@@ -8,12 +8,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
-
 
 /**
  * 移动执法装备管理信息表
@@ -31,7 +29,7 @@ public class RankEquipmentDTO implements Serializable {
 	@NotNull(message="{id.require}", groups = UpdateGroup.class)
 	private Long id;
 
-	@ApiModelProperty(value = "所属机构")
+	@ApiModelProperty(value = "所属机构id")
 	@NotNull(message="{deptId.require}", groups = AddGroup.class)
 	private Long deptId;
 
@@ -66,14 +64,8 @@ public class RankEquipmentDTO implements Serializable {
 	@ApiModelProperty(value = "创建时间")
 	private Date createDate;
 
-	@ApiModelProperty(value = "修改时间")
-	private Date updateDate;
-
 	@ApiModelProperty(value = "创建人")
 	private Long creator;
-
-	@ApiModelProperty(value = "修改人")
-	private Long updater;
 
 	@ApiModelProperty(value = "是否删除  1：已删除<br />0：未删除")
 	@Range(min=0, max=1, message = "{isDeleted.range}", groups = DefaultGroup.class)
@@ -84,9 +76,6 @@ public class RankEquipmentDTO implements Serializable {
 
 	@ApiModelProperty(value = "创建人姓名")
 	private String creatorName;
-
-	@ApiModelProperty(value = "修改人姓名")
-	private String updaterName;
 
 	@ApiModelProperty(value = "上级部门名称")
 	private String preDeptName;

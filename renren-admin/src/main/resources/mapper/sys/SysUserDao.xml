@@ -5,9 +5,9 @@
 
 	<select id="getList" resultType="io.renren.modules.sys.entity.SysUserEntity">
 		select t1.*, (select t2.name from sys_dept t2 where t2.id=t1.dept_id) deptName from sys_user t1
-		where t1.super_admin = 0
-		<if test="username != null and username.trim() != ''">
-			and t1.username like #{username}
+		where t1.super_admin = 0 and is_deleted = 0
+		<if test="realName != null and realName.trim() != ''">
+			and t1.real_name like #{realName}
 		</if>
 		<if test="deptId != null and deptId.trim() != ''">
 			and t1.dept_id = #{deptId}
@@ -25,11 +25,11 @@
 
 	<select id="getById" resultType="io.renren.modules.sys.entity.SysUserEntity">
 		select t1.*, (select t2.name from sys_dept t2 where t2.id=t1.dept_id) deptName from sys_user t1
-			where t1.id = #{value}
+			where is_deleted = 0 and t1.id = #{value}
 	</select>
 
 	<select id="getByUsername" resultType="io.renren.modules.sys.entity.SysUserEntity">
-		select * from sys_user where username = #{value}
+		select * from sys_user where is_deleted = 0 and username = #{value}
 	</select>
 
 	<update id="updatePassword">
@@ -37,14 +37,21 @@
 	</update>
 
 	<select id="getCountByDeptId" resultType="int">
-		select count(*) from sys_user where dept_id = #{value}
+		select count(*) from sys_user where is_deleted = 0 and dept_id = #{value}
 	</select>
 
 	<select id="getUserIdListByDeptId" resultType="Long">
-		select id from sys_user where dept_id in
+		select id from sys_user where is_deleted = 0 and dept_id in
 			<foreach item="deptId" collection="list" open="(" separator="," close=")">
 				#{deptId}
 			</foreach>
 	</select>
+
+    <update id="deleteBatchIds">
+        update sys_user set is_deleted = 1 where id in
+        <foreach item="id" collection="array" open="(" separator=", " close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>

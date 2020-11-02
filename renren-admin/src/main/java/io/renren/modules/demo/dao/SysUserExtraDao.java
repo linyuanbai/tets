@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SysUserExtraDao extends BaseDao<SysUserExtraEntity> {
 
     SysUserExtraEntity selectByUserId(Long id);
+
+    void deleteByUserIds(Long[] userIds);
 }

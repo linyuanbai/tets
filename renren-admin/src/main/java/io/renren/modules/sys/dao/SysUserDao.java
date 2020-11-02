@@ -12,6 +12,7 @@ import io.renren.common.dao.BaseDao;
 import io.renren.modules.sys.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  */
 @Mapper
+@Repository
 public interface SysUserDao extends BaseDao<SysUserEntity> {
 
 	List<SysUserEntity> getList(Map<String, Object> params);
@@ -41,4 +43,6 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 	 * 根据部门ID,查询用户ID列表
 	 */
 	List<Long> getUserIdListByDeptId(List<Long> deptIdList);
+
+    void deleteBatchIds(Long[] ids);
 }

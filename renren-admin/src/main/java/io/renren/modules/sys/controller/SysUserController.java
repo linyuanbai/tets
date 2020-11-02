@@ -67,7 +67,7 @@ public class SysUserController {
 		@ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
 		@ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
 		@ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
-		@ApiImplicitParam(name = "username", value = "用户名", paramType = "query", dataType="String"),
+		@ApiImplicitParam(name = "realName", value = "姓名", paramType = "query", dataType="String"),
 		@ApiImplicitParam(name = "gender", value = "性别", paramType = "query", dataType="String"),
 		@ApiImplicitParam(name = "deptId", value = "部门ID", paramType = "query", dataType="String")
 	})
@@ -125,26 +125,31 @@ public class SysUserController {
 	@ApiOperation("保存")
 	@LogOperation("保存")
 	@RequiresPermissions("sys:user:save")
-	public Result save(@ApiIgnore @RequestParam Map<String, String> params){
-		sysUserService.save(params);
+	public Result save(@RequestBody SysUserDTO dto){
+	    // id=null, username=444, password=444, realName=444, headUrl=null, gender=2,
+        // email=444@qq.com, mobile=15946461213, deptId=1321974947454648321,
+        // superAdmin=null, status=1, createDate=null, updateDate=null, job=1,
+        // jobLevel=1, roleIdList=[1316642919876149249], deptName=, sysUserExtraDTO=null
+
 		//效验数据
-//		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-//
-//		sysUserService.save(dto);
-//
-		return new Result();
+		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+
+		sysUserService.save(dto);
+        SysUserDTO sysUserDTO = sysUserService.getByUsername(dto.getUsername());
+        Long data = sysUserDTO.getId();
+		return new Result().ok(data);
 	}
 
 	@PutMapping
 	@ApiOperation("修改")
 	@LogOperation("修改")
 	@RequiresPermissions("sys:user:update")
-	public Result update(@ApiIgnore @RequestParam Map<String, String> params){
-		sysUserService.update(params);
+	public Result update(@RequestBody SysUserDTO dto){
+        System.out.println(dto);
 		//效验数据
-//		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-//
-//		sysUserService.update(dto);
+		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+
+		sysUserService.update(dto);
 
 		return new Result();
 	}
@@ -157,7 +162,7 @@ public class SysUserController {
 		//效验数据
 		AssertUtils.isArrayEmpty(ids, "id");
 
-		sysUserService.deleteBatchIds(Arrays.asList(ids));
+		sysUserService.delete(ids);
 
 		return new Result();
 	}

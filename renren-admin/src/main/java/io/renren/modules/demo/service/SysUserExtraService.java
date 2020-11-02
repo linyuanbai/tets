@@ -13,4 +13,6 @@ import io.renren.modules.demo.entity.SysUserExtraEntity;
 public interface SysUserExtraService extends CrudService<SysUserExtraEntity, SysUserExtraDTO> {
 
     SysUserExtraDTO selectByUserId(Long id);
+
+    void deleteByUserIds(Long[] ids);
 }

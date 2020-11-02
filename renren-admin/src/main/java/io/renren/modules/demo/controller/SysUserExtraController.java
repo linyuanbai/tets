@@ -69,6 +69,7 @@ public class SysUserExtraController {
     @LogOperation("保存")
     @RequiresPermissions("demo:sysuserextra:save")
     public Result save(@RequestBody SysUserExtraDTO dto){
+        System.out.println(dto);
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 

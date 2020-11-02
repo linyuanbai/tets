@@ -10,7 +10,6 @@ package io.renren.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.renren.common.entity.BaseEntity;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -44,6 +43,90 @@ public class SysDeptEntity extends BaseEntity {
 	 */
 	private Integer sort;
 	/**
+	 * 所属区域_省
+	 */
+	private Long regionProvince;
+	/**
+	 * 所属区域_地市
+	 */
+	private Long regionCity;
+	/**
+	 * 所属区域_区县
+	 */
+	private Long regionCounty;
+	/**
+	 * 所属区域_街道
+	 */
+	private Long regionStreet;
+	/**
+	 * 机构编码
+	 */
+	private String code;
+	/**
+	 * 机构类型
+	 */
+	private String type;
+	/**
+	 * 机构等级
+	 */
+	private String grade;
+	/**
+	 * 机构性质
+	 */
+	private String nature;
+	/**
+	 * 是否临时机构
+	 */
+	private String isTemporary;
+	/**
+	 * 有效期起始
+	 */
+	private Date validDayStart;
+	/**
+	 * 有效期截止
+	 */
+	private Date validDayEnd;
+	/**
+	 * 机构状态
+	 */
+	private String status;
+	/**
+	 * 联系地址
+	 */
+	private String address;
+	/**
+	 * 邮政编码
+	 */
+	private String zipCode;
+	/**
+	 * 电话
+	 */
+	private String phone;
+	/**
+	 * 邮箱
+	 */
+	private String email;
+	/**
+	 * 是否启用
+	 */
+	private String isUseable;
+	/**
+	 * 负责人
+	 */
+	private Long master;
+	/**
+	 * 副负责人
+	 */
+	private Long deputyPerson;
+	/**
+	 * 备注信息
+	 */
+	private String remarks;
+	/**
+	 * 是否删除
+	 */
+	private Integer isDeleted;
+	/**
 	 * 更新者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
@@ -58,41 +141,4 @@ public class SysDeptEntity extends BaseEntity {
 	 */
 	@TableField(exist = false)
 	private String parentName;
-
-	/**
-	 * 联系地址
-	 */
-	private String address;
-
-	/**
-	 * 电话
-	 */
-	private String phone;
-
-	/**
-	 * 邮箱
-	 */
-	private String email;
-
-	/**
-	 * 负责人
-	 */
-	private Long master;
-
-
-	/**
-	 * 是否是叶子节点
-	 */
-	private int leaf;
-
-	/**
-	 * 是否是叶子节点
-	 */
-	private String status;
-
-	/**
-	 * 机构等级
-	 */
-	private String grade;
-
 }

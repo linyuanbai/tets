@@ -16,7 +16,6 @@ import io.renren.modules.sys.entity.SysUserEntity;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 系统用户
  * 
@@ -55,7 +54,4 @@ public interface SysUserService extends BaseService<SysUserEntity> {
 	 */
 	List<Long> getUserIdListByDeptId(List<Long> deptIdList);
 
-    void save(Map<String, String> params);
-
-	void update(Map<String, String> params);
 }

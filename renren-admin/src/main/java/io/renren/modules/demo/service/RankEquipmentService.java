@@ -1,11 +1,8 @@
 package io.renren.modules.demo.service;
 
-import io.renren.common.page.PageData;
 import io.renren.common.service.CrudService;
 import io.renren.modules.demo.dto.RankEquipmentDTO;
 import io.renren.modules.demo.entity.RankEquipmentEntity;
-
-import java.util.List;
 
 /**
  * 移动执法装备管理信息表
@@ -17,8 +14,10 @@ public interface RankEquipmentService extends CrudService<RankEquipmentEntity, R
 
     /**
      * 通过deptId查询数据
-     * @param id
+     * @param deptId
      * @return
      */
-    RankEquipmentDTO selectByDeptId(Long id);
+    RankEquipmentDTO selectByDeptId(Long deptId);
+
+    void delete(Long[] ids);
 }

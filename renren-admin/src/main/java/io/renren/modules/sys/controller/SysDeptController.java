@@ -47,15 +47,6 @@ public class SysDeptController {
 		return new Result<List<SysDeptDTO>>().ok(list);
 	}
 
-	@GetMapping("list/{grade}/{pid}")
-	@ApiOperation("多条信息")
-	@RequiresPermissions("sys:dept:list")
-	public Result<List<SysDeptDTO>> getListByLevel(@PathVariable("grade") int grade, @PathVariable("pid") Long pid) {
-		List<SysDeptDTO> list = sysDeptService.getListByLevel(grade, pid);
-
-		return new Result<List<SysDeptDTO>>().ok(list);
-	}
-
 	@GetMapping("{id}")
 	@ApiOperation("信息")
 	@RequiresPermissions("sys:dept:info")
@@ -83,6 +74,7 @@ public class SysDeptController {
 	@LogOperation("修改")
 	@RequiresPermissions("sys:dept:update")
 	public Result update(@RequestBody SysDeptDTO dto){
+		System.out.println(dto);
 		//效验数据
 		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 

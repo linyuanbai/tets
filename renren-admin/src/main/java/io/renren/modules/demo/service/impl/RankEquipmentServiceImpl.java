@@ -8,12 +8,16 @@ import io.renren.modules.demo.dao.RankEquipmentDao;
 import io.renren.modules.demo.dto.RankEquipmentDTO;
 import io.renren.modules.demo.entity.RankEquipmentEntity;
 import io.renren.modules.demo.service.RankEquipmentService;
+import io.renren.modules.security.user.SecurityUser;
+import io.renren.modules.security.user.UserDetail;
+import io.renren.modules.sys.enums.SuperAdminEnum;
 import io.renren.modules.sys.service.SysDeptService;
 import io.renren.modules.sys.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,14 +62,11 @@ public class RankEquipmentServiceImpl extends CrudServiceImpl<RankEquipmentDao, 
             String deptName = sysDeptService.selectById(rankEquipmentDTO.getDeptId()).getName();
             // 获取创建者名字
             String creatorName = sysUserService.selectById(rankEquipmentDTO.getCreator()).getRealName();
-            // 获取修改人名字
-            String updaterName = sysUserService.selectById(rankEquipmentDTO.getUpdater()).getRealName();
             // 获取上级部门名
             String preDeptName = sysDeptService.get(rankEquipmentDTO.getDeptId()).getParentName();
             //将查询数据设置进dto
             rankEquipmentDTO.setDeptName(deptName);
             rankEquipmentDTO.setCreatorName(creatorName);
-            rankEquipmentDTO.setUpdaterName(updaterName);
             rankEquipmentDTO.setPreDeptName(preDeptName);
         }
     }
@@ -76,18 +77,29 @@ public class RankEquipmentServiceImpl extends CrudServiceImpl<RankEquipmentDao, 
         Integer page = new Integer(params.get("page").toString());
         params.put("offset", (page - 1) * limit);
         params.put("limit", limit);
-        // 如果参数中有deptId，则获取所有子部门ID列表
+
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if(user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            params.put("deptIdList", sysDeptService.getSubDeptIdList(user.getDeptId()));
+        }
+
+        // 如果参数中有deptId，则获取自身及所有子部门ID列表
         String deptId = params.get("deptId").toString();
         if (deptId != null && !deptId.isEmpty()) {
             List<Long> deptIdList = sysDeptService.getSubDeptIdList(new Long(deptId));
-            params.put("deptIdList", deptIdList);
+            params.put("subDeptIdList", deptIdList);
         }
+
         // 获取符合条件的总记录数
         Long total = baseDao.count(params);
+
         // 查询所有符合条件的记录(分页)
         List<RankEquipmentEntity> list = baseDao.getList(params);
+
         // 将entity对象转化为dto
         List<RankEquipmentDTO> dtoList = ConvertUtils.sourceToTarget(list, RankEquipmentDTO.class);
+
         // 关联外键信息
         setExtraInfoToList(dtoList);
         return getPageData(dtoList, total, RankEquipmentDTO.class);
@@ -109,8 +121,15 @@ public class RankEquipmentServiceImpl extends CrudServiceImpl<RankEquipmentDao, 
         }
     }
 
+    @Override
     public RankEquipmentDTO selectByDeptId (Long deptId) {
         RankEquipmentEntity entity = rankEquipmentDao.selectByDeptId(deptId);
         return ConvertUtils.sourceToTarget(entity, RankEquipmentDTO.class);
+    }
+
+    @Override
+    public void delete(Long[] ids) {
+        // 删除移动执法装备记录
+        rankEquipmentDao.deleteBatchIds(ids);
     }
 }

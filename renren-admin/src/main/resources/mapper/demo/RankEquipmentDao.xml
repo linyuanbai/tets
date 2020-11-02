@@ -30,6 +30,12 @@
                 #{deptId}
             </foreach>
         </if>
+        <if test=" subDeptIdList!=null ">
+            and dept_id
+            <foreach collection="subDeptIdList" item="deptId" index="i" open="in(" close=")" separator=", ">
+                #{deptId}
+            </foreach>
+        </if>
         order by ${orderField}
         <choose>
             <when test=" order!=null and order=='desc' ">
@@ -51,10 +57,24 @@
                 #{deptId}
             </foreach>
         </if>
+        <if test=" subDeptIdList!=null ">
+            and dept_id
+            <foreach collection="subDeptIdList" item="deptId" index="i" open="in(" close=")" separator=", ">
+                #{deptId}
+            </foreach>
+        </if>
     </select>
 
     <select id="selectByDeptId" resultType="io.renren.modules.demo.entity.RankEquipmentEntity">
         select id, dept_id from rank_equipment
-        where dept_id = #{deptId}
+        where is_deleted = 0 and dept_id = #{deptId}
     </select>
+
+    <update id="deleteBatchIds">
+        update rank_equipment set is_deleted = 1
+        where id in
+        <foreach collection="array" item="id" index="i" open="(" close=")" separator=", ">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

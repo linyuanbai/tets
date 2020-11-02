@@ -69,6 +69,22 @@ public class SysUserEntity extends BaseEntity {
 	 */
 	private Integer status;
 	/**
+	 * 职务
+	 */
+	private String job;
+	/**
+	 * 任现职务时间
+	 */
+	private String jobStart;
+	/**
+	 * 职务级别
+	 */
+	private String jobLevel;
+	/**
+	 * 现任级别时间
+	 */
+	private String levelStart;
+	/**
 	 * 更新者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
@@ -83,15 +99,4 @@ public class SysUserEntity extends BaseEntity {
 	 */
 	@TableField(exist=false)
 	private String deptName;
-
-	/**
-	 * 职务
-	 */
-	private String job;
-
-	/**
-	 * 职务级别
-	 */
-	private String jobLevel;
-
 }

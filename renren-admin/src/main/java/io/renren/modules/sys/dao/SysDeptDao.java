@@ -11,7 +11,6 @@ package io.renren.modules.sys.dao;
 import io.renren.common.dao.BaseDao;
 import io.renren.modules.sys.entity.SysDeptEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,10 +41,8 @@ public interface SysDeptDao extends BaseDao<SysDeptEntity> {
     List<Long> getSubDeptIdList(String id);
 
     /**
-     * 根据部门等级和上级id获得部门数据列表
-     * @param grade
-     * @param pid
-     * @return
+     * 根据部门id，对部门进行逻辑删除(把表的is_delete字段值设置成1)
+     * @param id
      */
-    List<SysDeptEntity> getListByLevel(@Param("grade") int grade, @Param("pid") Long pid);
+    void deleteById(Long id);
 }

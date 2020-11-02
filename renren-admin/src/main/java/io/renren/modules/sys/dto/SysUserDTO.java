@@ -73,6 +73,10 @@ public class SysUserDTO implements Serializable {
 	@NotNull(message="{sysuser.deptId.require}", groups = DefaultGroup.class)
 	private Long deptId;
 
+	@ApiModelProperty(value = "超级管理员   0：否   1：是")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Integer superAdmin;
+
 	@ApiModelProperty(value = "状态  0：停用    1：正常", required = true)
 	@Range(min=0, max=1, message = "{sysuser.status.range}", groups = DefaultGroup.class)
 	private Integer status;
@@ -81,21 +85,18 @@ public class SysUserDTO implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Date createDate;
 
-	@ApiModelProperty(value = "超级管理员   0：否   1：是")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	private Integer superAdmin;
-
-	@ApiModelProperty(value = "角色ID列表")
-	private List<Long> roleIdList;
-
-	@ApiModelProperty(value = "部门名称")
-	private String deptName;
-
 	@ApiModelProperty(value = "职务")
 	private String job;
 
 	@ApiModelProperty(value = "职务级别")
 	private String jobLevel;
+
+	// 关联属性
+	@ApiModelProperty(value = "角色ID列表")
+	private List<Long> roleIdList;
+
+	@ApiModelProperty(value = "部门名称")
+	private String deptName;
 
 	@ApiModelProperty(value = "用户额外信息")
 	private SysUserExtraDTO sysUserExtraDTO;

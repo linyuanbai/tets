@@ -23,4 +23,6 @@ public interface RankEquipmentDao extends BaseDao<RankEquipmentEntity> {
     Long count(Map<String, Object> params);
 
     RankEquipmentEntity selectByDeptId(Long deptId);
+
+    void deleteBatchIds(Long[] ids);
 }

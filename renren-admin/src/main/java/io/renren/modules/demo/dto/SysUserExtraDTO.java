@@ -1,5 +1,6 @@
 package io.renren.modules.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,26 +26,14 @@ public class SysUserExtraDTO implements Serializable {
 	@ApiModelProperty(value = "用户ID")
 	private Long userId;
 
-	@ApiModelProperty(value = "手机号码")
-	private String mobilePhone;
-
 	@ApiModelProperty(value = "办公室")
 	private String office;
 
 	@ApiModelProperty(value = "办公电话")
 	private String workPhone;
 
-	@ApiModelProperty(value = "电子邮箱")
-	private String email;
-
-	@ApiModelProperty(value = "有无监察执法证号  1：有/0：无")
-	private String hasSuperviseCard;
-
 	@ApiModelProperty(value = "监察执法证号")
 	private String superviseCardNo;
-
-	@ApiModelProperty(value = "有无行政执法证号  1：有/0：无")
-	private String hasAdministrationCard;
 
 	@ApiModelProperty(value = "行政执法证号")
 	private String administrationCardNo;
@@ -57,9 +46,6 @@ public class SysUserExtraDTO implements Serializable {
 
 	@ApiModelProperty(value = "岗位情况")
 	private String officeInfo;
-
-	@ApiModelProperty(value = "性别  0：男   1：女    2：保密")
-	private String gender;
 
 	@ApiModelProperty(value = "民族")
 	private String nation;
@@ -92,18 +78,20 @@ public class SysUserExtraDTO implements Serializable {
 	private String cardNo;
 
 	@ApiModelProperty(value = "创建时间")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Date createDate;
-
-	@ApiModelProperty(value = "修改时间")
-	private Date updateDate;
 
 	@ApiModelProperty(value = "创建人")
 	private Long creator;
 
-	@ApiModelProperty(value = "修改人")
-	private Long updater;
+	@ApiModelProperty(value = "备注")
+	private String remarks;
 
 	@ApiModelProperty(value = "是否删除  1：已删除<br />0：未删除")
 	private Integer isDeleted;
+
+	// 关联属性
+	@ApiModelProperty(value = "创建人姓名")
+	private Long creatorName;
 
 }

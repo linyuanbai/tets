@@ -26,10 +26,6 @@ public class SysUserExtraEntity extends BaseEntity {
      */
 	private Long userId;
     /**
-     * 手机号码
-     */
-	private String mobilePhone;
-    /**
      * 办公室
      */
 	private String office;
@@ -37,10 +33,6 @@ public class SysUserExtraEntity extends BaseEntity {
      * 办公电话
      */
 	private String workPhone;
-    /**
-     * 电子邮箱
-     */
-	private String email;
     /**
      * 有无监察执法证号  1：有/0：无
      */
@@ -69,10 +61,6 @@ public class SysUserExtraEntity extends BaseEntity {
      * 岗位情况
      */
 	private String officeInfo;
-    /**
-     * 性别  0：男   1：女    2：保密
-     */
-	private String gender;
     /**
      * 民族
      */
@@ -113,6 +101,10 @@ public class SysUserExtraEntity extends BaseEntity {
      * 身份证号码
      */
 	private String cardNo;
+	/**
+	 * 备注
+	 */
+	private String remarks;
     /**
      * 修改时间
      */

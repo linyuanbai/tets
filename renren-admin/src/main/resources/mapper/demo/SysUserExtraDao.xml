@@ -32,11 +32,19 @@
         <result property="updateDate" column="update_date"/>
         <result property="creator" column="creator"/>
         <result property="updater" column="updater"/>
+        <result property="remarks" column="remarks"/>
         <result property="isDeleted" column="is_deleted"/>
     </resultMap>
 
     <select id="selectByUserId" resultType="io.renren.modules.demo.entity.SysUserExtraEntity">
         select * from sys_user_extra where user_id = #{userId}
     </select>
+
+    <update id="deleteByUserIds">
+        update sys_user_extra set is_deleted = 1 where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
 
 </mapper>

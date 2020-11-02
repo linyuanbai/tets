@@ -41,4 +41,9 @@ public class SysUserExtraServiceImpl extends CrudServiceImpl<SysUserExtraDao, Sy
         SysUserExtraEntity sysUserExtraEntity = sysUserExtraDao.selectByUserId(id);
         return ConvertUtils.sourceToTarget(sysUserExtraEntity, SysUserExtraDTO.class);
     }
+
+    @Override
+    public void deleteByUserIds(Long[] ids) {
+        sysUserExtraDao.deleteByUserIds(ids);
+    }
 }
